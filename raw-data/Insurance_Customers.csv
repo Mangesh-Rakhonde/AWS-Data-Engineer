@@ -1,0 +1,11 @@
+CustomerID,Name,DOB,Gender,Region
+C100,Customer_0,2001-08-30,Female,West
+C101,Customer_1,1999-09-22,Male,East
+C102,Customer_2,2005-05-02,Male,North
+C103,Customer_3,2004-08-28,Male,South
+C104,Customer_4,2004-03-03,Male,West
+C105,Customer_5,2002-04-18,Male,East
+C106,Customer_6,2001-06-18,Male,East
+C107,Customer_7,2011-05-25,Male,South
+C108,Customer_8,2001-02-11,Female,South
+C109,Customer_9,2012-05-29,Male,East
