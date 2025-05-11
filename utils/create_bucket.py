@@ -34,5 +34,5 @@ def delete_s3_bucket(bucket_name):
         print(f"❌ Error deleting bucket: {e}")
 
 
-create_s3_bucket("insurance-raw-data26")
-#delete_s3_bucket("insurance-raw-data26")
+#create_s3_bucket("insurance-raw-data26")
+delete_s3_bucket("insurance-raw-data26")
