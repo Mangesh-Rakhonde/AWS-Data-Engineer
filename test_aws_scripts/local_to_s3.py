@@ -1,23 +1,14 @@
 import boto3
 from botocore.exceptions import ClientError
 from utils.spark import create_dataframe,get_spark_session
-from dotenv import load_dotenv
-import os
+
 
 class DataValidation:
 
     @staticmethod
     def local_to_s3():
-        load_dotenv()
-        [claim_df,customer_df,policies_df]=create_dataframe()
-        try:
-            spark=get_spark_session()
-            spark.conf.set("spark.hadoop.fs.s3a.access.key", os.getenv("AWS_ACCESS_KEY_ID"))
-            spark.conf.set("spark.hadoop.fs.s3a.secret.key", os.getenv("AWS_SECRET_ACCESS_KEY"))
-            spark.conf.set("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
-        except KeyError as e:
-            print(f"Error in setting credentials:{e}")
 
+        [claim_df,customer_df,policies_df]=create_dataframe()
 
         #aading dfs in s3 bucket
         try:
@@ -41,6 +32,9 @@ class DataValidation:
         except ClientError as e:
             print("Error occurs during keeping df in s3".format(e))
 
+        except Exception as e:
+            print("Error occures:".format(e))
+
         else:
             print("DataFrames successfully added to s3.")
 
@@ -50,15 +44,21 @@ class DataValidation:
             objects_to_delete = [
                 {"Key": "raw-data/policies_data.parquet"},
                 {"Key": "raw-data/customer_data.parquet"},
-                {"Key": "raw-data/claim_data.parquet"}
+                {"Key": "raw-data/claim_data.parquet"},
+                {"Key": "raw-data"}
             ]
             s3=boto3.client("s3")
             response = s3.delete_objects(
                 Bucket="insurance-raw-data26",
                 Delete={"Objects": objects_to_delete}
             )
+            print(response)
         except ClientError as e:
             print("Error {}".format(e))
+
+        except Exception as e:
+            print("Error occures:".format(e))
+
         else:
             print("Deleted files:", [obj["Key"] for obj in response.get("Deleted", [])])
 
@@ -75,6 +75,10 @@ class DataValidation:
             bucket.object_versions.delete()
         except ClientError as e:
             print(f"Error occures {e}")
+
+        except Exception as e:
+            print("Error occures:".format(e))
+
         else:
             print(f"Emptied bucket: {bucket_name}")
 
