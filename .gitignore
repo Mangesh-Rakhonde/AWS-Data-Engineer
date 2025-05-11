@@ -3,3 +3,6 @@
 .env
 Credential
 *.pyc
+# Python cache folders
+__pycache__/
+*.py[cod]
