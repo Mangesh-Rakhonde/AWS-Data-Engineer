@@ -1,7 +1,13 @@
 from pyspark.sql import SparkSession
+from dotenv import load_dotenv
+import os
 
 def get_spark_session():
+    load_dotenv()
     spark = SparkSession.builder.appName("Insurance_spark_app").getOrCreate()
+    spark.conf.set("spark.hadoop.fs.s3a.access.key", os.getenv("AWS_ACCESS_KEY_ID"))
+    spark.conf.set("spark.hadoop.fs.s3a.secret.key", os.getenv("AWS_SECRET_ACCESS_KEY"))
+    spark.conf.set("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
     return spark
 
 
