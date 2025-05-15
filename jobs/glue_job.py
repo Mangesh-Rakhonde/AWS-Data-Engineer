@@ -3,7 +3,7 @@ import boto3
 glue = boto3.client('glue', region_name='us-east-1')  # Change region if needed
 
 job_name = 'insurance-data-pipeline-job'
-role_arn = 'arn:aws:iam::261000474012:user/Mangesh'  # Replace with your role
+role_arn = 'arn:aws:iam::261000474012:role/Glue_service_role'  # Replace with your role
 script_location = 's3://insurance-raw-data26/scripts/glue_script.py'
 temp_dir = 's3://insurance-raw-data26/temp/'
 #python_libs = 's3://insurance-raw-data26/libs/my_deps.zip'  # Optional
